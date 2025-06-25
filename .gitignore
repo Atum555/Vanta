@@ -1,0 +1,53 @@
+# Compiled object files
+*.o
+*.lo
+*.la
+*.al
+
+# Compiled binary files
+*.out
+*.exe
+proj
+
+# Libraries
+*.lib
+*.a
+*.so
+*.dylib
+*.dll
+
+# Debug files
+*.gdbinit
+*.dSYM/
+*.stackdump
+
+# Minix-specific temporary files
+*.core
+*.swap
+*core*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Build directories
+build/
+bin/
+obj/
+dist/
+
+# IDE-specific files
+.vscode/
+!.vscode/c_cpp_properties.json
+.idea/
+*.code-workspace
+
+# LCF-generated files
+trace.txt
+output.txt
+
+# Git-specific files
+*.orig
