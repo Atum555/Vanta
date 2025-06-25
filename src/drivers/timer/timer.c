@@ -1,0 +1,51 @@
+#include "./timer.h"
+
+Result timer_get_conf(Timer timer, TimerStatus *status) {
+    TimerCtrlWord command = timer_readback_command(false, true, timer == TIMER_0, timer == TIMER_1, timer == TIMER_2);
+    RETURN_ON_ERROR(util_sys_outb(TIMER_CTRL_REG, command));
+
+    TimerStatus temp_status;
+    RETURN_ON_ERROR(util_sys_inb(timer_to_reg(timer), &temp_status));
+    *status = temp_status;
+
+    return RES_OK;
+}
+
+Result timer_display_conf(Timer timer, TimerStatus status, enum timer_status_field field) {
+    union timer_status_field_val value;
+
+    switch (field) {
+    case tsf_all: value.byte = status; break;
+
+    case tsf_initial:
+        TimerInitMode initMode;
+        if (IS_ERROR(timer_status_to_init_mode(status, &initMode))) {
+            value.in_mode = INVAL_val;
+            break;
+        }
+
+        switch (initMode) {
+        case LSB    : value.in_mode = LSB_only; break;
+        case MSB    : value.in_mode = MSB_only; break;
+        case LSB_MSB: value.in_mode = MSB_after_LSB; break;
+        default     : return RES_ERROR;
+        }
+        break;
+
+    case tsf_mode:
+        TimerCountingMode coutingMode;
+        RETURN_IF_ERROR(timer_status_to_couting_mode(status, &coutingMode));
+        value.count_mode = coutingMode;
+        break;
+
+    case tsf_base:
+        TimerBCDMode bcdMode;
+        RETURN_IF_ERROR(timer_status_to_bsc(status, &bcdMode));
+        value.bcd = bcdMode;
+
+    default: return RES_INVALID_ARGUMENT;
+    }
+
+    if (IS_ERROR(timer_print_config(timer, field, value))) return RES_ERROR;
+    return RES_OK;
+}
