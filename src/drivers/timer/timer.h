@@ -5,6 +5,7 @@
 #include "../../utils/result.h"
 #include "../utils.h"
 #include "i8254.h"
+#include "lcom/lcf.h"
 #include "lcom/timer.h"
 
 /**
@@ -108,8 +109,8 @@ static inline Result timer_ctrl_word(
  * @param   t_2    ...
  * @return  Control word for readback.
  */
-static inline TimerCtrlWord timer_create_readback_command(bool count, bool status, bool t_0, bool t_1, bool t_2) {
-    uint8_t word = 0x00;
+static inline TimerCtrlWord timer_readback_command(bool count, bool status, bool t_0, bool t_1, bool t_2) {
+    uint8_t word = BIT(7) | BIT(6);
 
     if (!count) word |= BIT(5);
     if (!status) word |= BIT(4);
@@ -134,7 +135,7 @@ static inline Result timer_status_to_init_mode(TimerStatus status, TimerInitMode
     case CTRL_LSB    : *initMode = LSB; break;
     case CTRL_MSB    : *initMode = MSB; break;
     case CTRL_LSB_MSB: *initMode = LSB_MSB; break;
-    default          : RES_INVALID_ARGUMENT;
+    default          : return RES_INVALID_ARGUMENT;
     }
 
     return RES_OK;
@@ -191,7 +192,7 @@ static inline Result timer_status_to_bsc(TimerStatus status, TimerBCDMode *bcdMo
  * @param   status  Out: the returned status byte.
  * @return  RES_OK on success or an error code on failure.
  */
-Result timer_get_conf(Timer timer, TimerStatus *status);
+Result timer_get_conf_alt(Timer timer, TimerStatus *status);
 
 /**
  * @brief   Displays a specific field of a timer’s status.
@@ -200,6 +201,8 @@ Result timer_get_conf(Timer timer, TimerStatus *status);
  * @param   field   Which field to display (tsf_all, tsf_initial, etc.).
  * @return  RES_OK on success or an error code on failure.
  */
-Result timer_display_conf(Timer timer, TimerStatus status, enum timer_status_field field);
+Result timer_display_conf_alt(Timer timer, TimerStatus status, enum timer_status_field field);
+
+Result timer_set_frequency_alt(Timer timer, uint32_t freq);
 
 #endif // _IO_TIMER_
