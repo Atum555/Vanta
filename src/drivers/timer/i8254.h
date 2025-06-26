@@ -1,14 +1,10 @@
-#ifndef _IO_I8254_
-#define _IO_I8254_
-
 /**
  * @file i8254.h
  * @brief Intel 8254 Programmable Interval Timer (PIT) register and control definitions
  */
 
-#include "../utils.h"
-#include "stdbool.h"
-#include "stdint.h"
+#ifndef _IO_I8254_
+#define _IO_I8254_
 
 #define TIMER_IRQ_LINE      0                      /** @brief Timer IRQ Line number */
 #define TIMER_FREQUENCY     1193182                /** @brief Clock frequency of timer counter */
