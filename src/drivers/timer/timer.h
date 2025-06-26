@@ -211,4 +211,17 @@ Result timer_display_conf_alt(Timer timer, TimerStatus status, enum timer_status
  */
 Result timer_set_frequency_alt(Timer timer, uint32_t freq);
 
+/**
+ * @brief   Subscribes to timer interrupts.
+ * @param   bit_no  Out: pointer to store the IRQ bit number for the timer.
+ * @return  RES_OK on success or an error code on failure.
+ */
+Result timer_subscribe_int_alt(uint8_t *bit_no);
+
+/**
+ * @brief   Unsubscribes from timer interrupts.
+ * @return  RES_OK on success or an error code on failure.
+ */
+Result timer_unsubscribe_int_alt();
+
 #endif // _IO_TIMER_

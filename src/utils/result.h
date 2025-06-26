@@ -19,6 +19,7 @@ typedef enum {
     RES_INVALID_ARGUMENT, // Invalid argument passed to function
     RES_NULL_POINTER,     // Null pointer passed to function
     RES_LCOM_ERROR,       // LCOM library internal error
+    RES_KERNEL_ERROR,     // Kernel internal error
 } Result;
 
 /**

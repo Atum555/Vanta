@@ -41,8 +41,46 @@ int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
 }
 
 int(timer_test_int)(uint8_t time) {
-    /* To be implemented by the students */
-    printf("%s is not yet implemented!\n", __func__);
+    // Subscribe to timer interrupts
+    uint8_t timer_irq_bit;
+    RETURN_IF_ERROR(timer_subscribe_int_alt(&timer_irq_bit));
 
-    return 1;
+    // Timer counter
+    uint32_t timer_counter = 0;
+
+    // Main interrupt loop
+    int     ipc_status;
+    message msg;
+    int     r;
+    while (time) {
+        // Get a request message.
+        if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+            printf("driver_receive failed with: %d", r);
+            continue;
+        }
+        if (is_ipc_notify(ipc_status)) {                            // Check received notification
+            switch (_ENDPOINT_P(msg.m_source)) {
+            case HARDWARE:                                          // Check it is a hardware interrupt notification
+                if (msg.m_notify.interrupts & BIT(timer_irq_bit)) { // Check interrupt bit
+                    // Increment counter
+                    timer_counter++;
+
+                    // If a minute has passed
+                    // Decrement time
+                    // Print time passed
+                    if (timer_counter >= 60) {
+                        timer_counter = 0;
+                        time--;
+                        timer_print_elapsed_time();
+                    }
+                }
+                break;
+            default: break;
+            }
+        }
+    }
+
+    // Unsubscribe from timer before returning
+    RETURN_IF_ERROR(timer_unsubscribe_int_alt());
+    return RES_OK;
 }

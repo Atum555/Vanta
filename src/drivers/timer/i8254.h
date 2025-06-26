@@ -10,6 +10,7 @@
 #include "stdbool.h"
 #include "stdint.h"
 
+#define TIMER_IRQ_LINE  0                          /** @brief Timer IRQ Line number */
 #define TIMER_FREQUENCY 1193182                    /** @brief Clock frequency of timer counter */
 
 #define TIMER_0_REG    0x40                        /** @brief Channel 0 data port */

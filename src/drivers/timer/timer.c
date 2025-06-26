@@ -1,5 +1,7 @@
 #include "timer.h"
 
+int32_t timer_hook_id = 0;
+
 Result timer_get_conf_alt(Timer timer, TimerStatus *status) {
     if (status == NULL) return RES_NULL_POINTER;
 
@@ -79,7 +81,7 @@ Result timer_set_frequency_alt(Timer timer, uint32_t freq) {
     RETURN_IF_ERROR(timer_ctrl_word(timer, LSB_MSB, countingMode, bcdMode, &word));
 
     //! Hack to give what is expected to LCOM
-    // Some options for the TimerCountingMode have multiple different 
+    // Some options for the TimerCountingMode have multiple different
     // representations even though it should always be only one
     // this code keeps the representation stored on the register
     if (status & BIT(3)) word |= BIT(3);
@@ -91,5 +93,18 @@ Result timer_set_frequency_alt(Timer timer, uint32_t freq) {
     RETURN_IF_ERROR(util_sys_outb(timer_to_reg(timer), counterValueLSB));
     RETURN_IF_ERROR(util_sys_outb(timer_to_reg(timer), counterValueMSB));
 
+    return RES_OK;
+}
+
+Result timer_subscribe_int_alt(uint8_t *bit_no) {
+    uint8_t temp_bit_no = timer_hook_id;
+    if (sys_irqsetpolicy(TIMER_IRQ_LINE, IRQ_REENABLE, &timer_hook_id)) return RES_KERNEL_ERROR;
+
+    *bit_no = temp_bit_no;
+    return RES_OK;
+}
+
+Result timer_unsubscribe_int_alt() {
+    if (sys_irqrmpolicy(&timer_hook_id)) return RES_KERNEL_ERROR;
     return RES_OK;
 }
