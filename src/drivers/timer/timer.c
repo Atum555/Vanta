@@ -58,7 +58,7 @@ Result timer_display_conf_alt(Timer timer, TimerStatus status, enum timer_status
 
 Result timer_set_frequency_alt(Timer timer, uint32_t freq) {
     // Calculate counter value for the given frequency
-    if (freq < 19 || freq > TIMER_FREQUENCY) return RES_INVALID_ARGUMENT;
+    if (freq < TIMER_MIN_FREQUENCY || freq > TIMER_FREQUENCY) return RES_INVALID_ARGUMENT;
     uint16_t counterValue = TIMER_FREQUENCY / freq;
 
     // Get counter initial value as separate bytes
