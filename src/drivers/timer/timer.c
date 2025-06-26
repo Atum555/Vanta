@@ -40,7 +40,7 @@ Result timer_display_conf_alt(Timer timer, TimerStatus status, enum timer_status
         break;
 
     case tsf_mode:
-        RETURN_IF_ERROR(timer_status_to_couting_mode(status, &coutingMode));
+        RETURN_IF_ERROR(timer_status_to_counting_mode(status, &coutingMode));
         value.count_mode = coutingMode;
         break;
 
@@ -73,7 +73,7 @@ Result timer_set_frequency_alt(Timer timer, uint32_t freq) {
     // Store current state not to lose
     TimerCountingMode countingMode;
     TimerBCDMode      bcdMode;
-    RETURN_IF_ERROR(timer_status_to_couting_mode(status, &countingMode));
+    RETURN_IF_ERROR(timer_status_to_counting_mode(status, &countingMode));
     RETURN_IF_ERROR(timer_status_to_bsc(status, &bcdMode));
 
     // Create new control word

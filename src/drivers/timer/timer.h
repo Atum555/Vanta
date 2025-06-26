@@ -144,23 +144,23 @@ static inline Result timer_status_to_init_mode(TimerStatus status, TimerInitMode
 /**
  * @brief   Decode counting mode from a status byte.
  * @param   status       Raw status byte.
- * @param   coutingMode  Out: decoded counting mode.
+ * @param   countingMode  Out: decoded counting mode.
  * @return  RES_OK or error code.
  */
-static inline Result timer_status_to_couting_mode(TimerStatus status, TimerCountingMode *coutingMode) {
-    if (coutingMode == NULL) return RES_NULL_POINTER;
+static inline Result timer_status_to_counting_mode(TimerStatus status, TimerCountingMode *countingMode) {
+    if (countingMode == NULL) return RES_NULL_POINTER;
 
     switch (status & CTRL_MODE_MASK) {
-    case CTRL_MODE_0: *coutingMode = MODE_0; break;
-    case CTRL_MODE_1: *coutingMode = MODE_1; break;
-    case CTRL_MODE_4: *coutingMode = MODE_4; break;
-    case CTRL_MODE_5: *coutingMode = MODE_5; break;
+    case CTRL_MODE_0: *countingMode = MODE_0; break;
+    case CTRL_MODE_1: *countingMode = MODE_1; break;
+    case CTRL_MODE_4: *countingMode = MODE_4; break;
+    case CTRL_MODE_5: *countingMode = MODE_5; break;
 
     case CTRL_MODE_2:
-    case CTRL_MODE_2_ALT: *coutingMode = MODE_2; break;
+    case CTRL_MODE_2_ALT: *countingMode = MODE_2; break;
 
     case CTRL_MODE_3:
-    case CTRL_MODE_3_ALT: *coutingMode = MODE_3; break;
+    case CTRL_MODE_3_ALT: *countingMode = MODE_3; break;
 
     default: return RES_INVALID_ARGUMENT;
     }
