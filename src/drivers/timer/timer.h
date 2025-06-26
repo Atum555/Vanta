@@ -188,21 +188,27 @@ static inline Result timer_status_to_bsc(TimerStatus status, TimerBCDMode *bcdMo
 
 /**
  * @brief   Reads the current configuration (status byte) of a timer channel.
- * @param   timer   The timer channel to query.
- * @param   status  Out: the returned status byte.
+ * @param   timer   The timer channel to query (TIMER_0..TIMER_2).
+ * @param   status  Out: pointer to where the returned status byte will be stored.
  * @return  RES_OK on success or an error code on failure.
  */
 Result timer_get_conf_alt(Timer timer, TimerStatus *status);
 
 /**
  * @brief   Displays a specific field of a timer’s status.
- * @param   timer   The timer channel.
- * @param   status  The status byte obtained via timer_get_conf.
- * @param   field   Which field to display (tsf_all, tsf_initial, etc.).
+ * @param   timer   The timer channel (TIMER_0..TIMER_2).
+ * @param   status  The status byte obtained via timer_get_conf_alt().
+ * @param   field   Which field to display (tsf_all, tsf_initial, tsf_mode, tsf_base).
  * @return  RES_OK on success or an error code on failure.
  */
 Result timer_display_conf_alt(Timer timer, TimerStatus status, enum timer_status_field field);
 
+/**
+ * @brief   Changes the operating frequency of a timer channel.
+ * @param   timer  The timer channel to configure (TIMER_0..TIMER_2).
+ * @param   freq   Desired timer operating frequency (Hz).
+ * @return  RES_OK on success or an error code on failure.
+ */
 Result timer_set_frequency_alt(Timer timer, uint32_t freq);
 
 #endif // _IO_TIMER_
