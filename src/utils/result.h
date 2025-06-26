@@ -20,6 +20,7 @@ typedef enum {
     RES_NULL_POINTER,     // Null pointer passed to function
     RES_LCOM_ERROR,       // LCOM library internal error
     RES_KERNEL_ERROR,     // Kernel internal error
+    RES_NOT_READY,        // The result is not ready / cannot be read yet
 } Result;
 
 /**
