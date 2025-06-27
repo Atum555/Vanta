@@ -6,9 +6,10 @@
 #ifndef _IO_I8254_
 #define _IO_I8254_
 
-#define TIMER_IRQ_LINE      0                      /** @brief Timer IRQ Line number */
-#define TIMER_FREQUENCY     1193182                /** @brief Clock frequency of timer counter */
-#define TIMER_MIN_FREQUENCY 19                     /** @brief Timer minumum frequency */
+#define TIMER_IRQ_LINE           0                 /** @brief Timer IRQ Line number */
+#define TIMER_FREQUENCY          1193182           /** @brief Clock frequency of timer counter */
+#define TIMER_MIN_FREQUENCY      19                /** @brief Timer minumum frequency */
+#define TIMER_0_TICKS_PER_SECOND 60                /** @brief Ticks per second for the default config of timer 0 */
 
 #define TIMER_0_REG    0x40                        /** @brief Channel 0 data port */
 #define TIMER_1_REG    0x41                        /** @brief Channel 1 data port */

@@ -1,7 +1,7 @@
 #include "keyboard.h"
 #include "lcom/lcf.h"
 
-int32_t KBC_hook_id  = 0;
+int32_t KBC_hook_id  = 1;
 bool    completeScan = true;
 
 Result keyboard_subscribe_int(uint8_t *bit_no) {
