@@ -1,6 +1,5 @@
 #include "utils.h"
 #include "lcom/lcf.h"
-#include "stdint.h"
 
 Result util_sys_outb(uint32_t port, uint8_t byte) {
     if (sys_outb(port, byte)) return RES_IO_ERROR;

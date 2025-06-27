@@ -6,15 +6,14 @@
 #ifndef _IO_UTILS_
 #define _IO_UTILS_
 
-// IO Utils
 #include "../utils/result.h"
 #include "stdint.h"
 
-/**
- * @brief Create a bit mask with bit n set.
- * @param n The bit position to set (0-based).
- */
-#define BIT(n) (1 << n)
+// /**
+//  * @brief Create a bit mask with bit n set.
+//  * @param n The bit position to set (0-based).
+//  */
+// #define BIT(n) (1 << n)
 
 /**
  * @brief Write a byte to the specified I/O port.
