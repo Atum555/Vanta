@@ -47,3 +47,15 @@ Result keyboard_ih(uint16_t *scancode) {
 
     return RES_OK;
 }
+
+Result keyboard_poll(uint16_t *scancode) { return keyboard_ih(scancode); }
+
+Result keyboard_restore() {
+    KBCCommand commandByte;
+    RETURN_IF_ERROR(KBC_read_command_byte(&commandByte));
+
+    commandByte |= KBC_COMMAND_BYTE_KEYBOARD_INT_BIT;
+
+    RETURN_IF_ERROR(KBC_write_command_with_arg(KBC_WRITE_COMMAND_BYTE_COMMAND, commandByte));
+    return RES_OK;
+}

@@ -72,10 +72,23 @@ int(kbd_test_scan)() {
 }
 
 int(kbd_test_poll)() {
-    /* To be completed by the students */
-    printf("%s is not yet implemented!\n", __func__);
+    uint16_t scancode = 0x00;
+    while (scancode != 0x81) {
+        if (IS_OK(keyboard_poll(&scancode))) {
+            // Split scancode into 2 bytes
+            uint8_t buf[2] = {
+                (uint8_t)((scancode >> 8) & 0xFF),
+                (uint8_t)(scancode & 0xFF),
+            };
 
-    return 1;
+            // Send scancode in the proper format to the printing function
+            kbd_print_scancode(!(buf[1] & BIT(7)), buf[0] == 0 ? 1 : 2, buf[0] == 0 ? &buf[1] : buf);
+        }
+    }
+
+    // Reenable keyboard interrupts
+    RETURN_IF_ERROR(keyboard_restore());
+    return RES_OK;
 }
 
 int(kbd_test_timed_scan)(uint8_t n) {

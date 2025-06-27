@@ -21,6 +21,7 @@ typedef enum {
     RES_LCOM_ERROR,       // LCOM library internal error
     RES_KERNEL_ERROR,     // Kernel internal error
     RES_NOT_READY,        // The result is not ready / cannot be read yet
+    RES_TIMEOUT,          // The operation asked timedout
 } Result;
 
 /**

@@ -9,6 +9,8 @@
 
 typedef uint8_t KBCStatus;
 typedef uint8_t KBCOutput;
+typedef uint8_t KBCCommand;
+typedef uint8_t KBCArgument;
 
 /** @brief Checks if the given KBC status indicates a parity error.
  *  @param status The status byte read from the KBC.
@@ -53,5 +55,29 @@ Result KBC_read_status(KBCStatus *status);
  * @return RES_OK on success, RES_NOT_READY if buffer empty, or an error code on failure.
  */
 Result KBC_read_output(KBCOutput *output);
+
+/**
+ * @brief Sends a command byte to the Keyboard Controller (KBC), waiting until the input buffer is ready.
+ * @param command The command byte to send to the controller.
+ * @return RES_OK on success, RES_TIMEOUT if the buffer remained full after all retries, or another error code on
+ * failure.
+ */
+Result KBC_write_command(KBCCommand command);
+
+/**
+ * @brief Sends a command and its argument to the Keyboard Controller (KBC).
+ * @param command The command byte to send.
+ * @param argument The argument byte associated with that command.
+ * @return RES_OK on success, RES_TIMEOUT if the buffer remained full after all retries, or another error code on
+ * failure.
+ */
+Result KBC_write_command_with_arg(KBCCommand command, KBCArgument argument);
+
+/**
+ * @brief Reads back the current command byte stored in the Keyboard Controller (KBC).
+ * @param command Pointer to a variable where the retrieved command byte will be stored.
+ * @return RES_OK on success, or an error code on failure.
+ */
+Result KBC_read_command_byte(KBCCommand *command);
 
 #endif // _IO_KBC_
