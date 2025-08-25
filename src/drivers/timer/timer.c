@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "../utils.h"
 
 int32_t timer_hook_id = 0;
 

@@ -1,12 +1,14 @@
+/**
+ * @file timer.h
+ * @brief Functions and types for using the i8254 PIT timers
+ */
+
 #ifndef _IO_TIMER_
 #define _IO_TIMER_
 
-// Timer - Device Driver
 #include "../../utils/result.h"
-#include "../utils.h"
 #include "i8254.h"
 #include "lcom/lcf.h"
-#include "lcom/timer.h"
 
 /**
  * @enum  Timer
